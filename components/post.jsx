@@ -1,14 +1,14 @@
-function Post({ alt, date, image, title, url }) {
-    return (
-        <div className="container">
-            <a href={url}>
-                <img alt={alt} src={image} />
-            </a>
-            <div className="text">
-                <h2>{title}</h2>
-                <h4>{date}</h4>
-            </div>
-            <style jsx>{`
+const Post = ({ alt, date, image, title, url }) => {
+  return (
+    <div className="container">
+      <a href={url}>
+        <img alt={alt} src={image} />
+      </a>
+      <div className="text">
+        <h2>{title}</h2>
+        <h4>{date}</h4>
+      </div>
+      <style jsx>{`
           .container {
             cursor: pointer;
             height: 453px;
@@ -37,8 +37,8 @@ function Post({ alt, date, image, title, url }) {
             margin-top: 8px;
           }
         `}</style>
-        </div>
-    )
+    </div>
+  )
 }
 
 export default Post

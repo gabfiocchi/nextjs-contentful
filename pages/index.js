@@ -1,52 +1,67 @@
 import styles from '../styles/Home.module.css'
 import { useEffect, useState } from 'react'
-import Head from 'next/head'
-import Post from '../components/post'
+import Link from 'next/link';
+import { Button, Grid, Page, Text } from '@geist-ui/react';
+import { createClient } from 'contentful';
 
-const client = require('contentful').createClient({
+
+const client = createClient({
   space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID,
   accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN,
-})
+});
 
-function HomePage() {
+const HomePage = () => {
   async function fetchEntries() {
-    const entries = await client.getEntries()
-    if (entries.items) return entries.items
+    const entries = await client.getEntries({
+      content_type: 'landing',
+      limit: 1
+    })
+    if (entries.items) {
+      console.log('entries', entries.items[0].fields);
+      return entries.items[0] && entries.items[0].fields;
+    }
     console.log(`Error getting Entries for ${contentType.name}.`)
   }
 
-  const [posts, setPosts] = useState([])
+  const [content, setContent] = useState([])
 
   useEffect(() => {
-    async function getPosts() {
-      const allPosts = await fetchEntries()
-      setPosts([...allPosts])
+    const getContent = async () => {
+      setContent([...await fetchEntries()])
     }
-    getPosts()
+    getContent()
   }, [])
-
   return (
     <>
-      <Head>
-        <title>Next.js + Contentful</title>
-        <link
-          rel="stylesheet"
-          href="https://css.zeit.sh/v1.css"
-          type="text/css"
-        />
-      </Head>
-      {posts.length > 0
-        ? posts.map((p) => (
-          <Post
-            alt={p.fields.alt}
-            date={p.fields.date}
-            key={p.fields.title}
-            image={p.fields.image}
-            title={p.fields.title}
-            url={p.fields.url}
-          />
-        ))
-        : null}
+      <Page size="small">
+        <Page.Header>
+          <h2>Singular Cover</h2>
+        </Page.Header>
+        <Page.Content>
+
+          <Text h2>
+            {content.title}
+          </Text>
+
+          <Text p>
+            {content.subtitle}
+          </Text>
+
+          <Text p b>
+            {content.text}
+          </Text>
+          <Grid>
+            <Link href="/about-you/concerns">
+              <Button className="action" auto type="success">
+                {content.action}
+              </Button>
+            </Link>
+          </Grid>
+        </Page.Content>
+        <Page.Footer>
+          <h2>Footer</h2>
+        </Page.Footer>
+      </Page>
     </>
   )
 }
