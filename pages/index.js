@@ -27,7 +27,7 @@ const HomePage = () => {
 
   useEffect(() => {
     const getContent = async () => {
-      setContent([...await fetchEntries()])
+      setContent(await fetchEntries())
     }
     getContent()
   }, [])
@@ -52,7 +52,7 @@ const HomePage = () => {
           </Text>
           <Grid>
             <Link href="/about-you/concerns">
-              <Button className="action" auto type="success">
+              <Button className={styles.action} auto type="success">
                 {content.action}
               </Button>
             </Link>
