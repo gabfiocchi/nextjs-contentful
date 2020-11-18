@@ -1,9 +1,9 @@
-import styles from '../../styles/Concerns.module.css'
-import { useEffect, useState } from 'react'
+import styles from '../../styles/Concerns.module.scss';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Button, Card, Grid, Page, Spacer, Text } from '@geist-ui/react';
+import { Button, Grid, Page, Spacer, Text } from '@geist-ui/react';
 import { createClient } from 'contentful';
-
+import Card from '../../components/card';
 
 const client = createClient({
     space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID,
@@ -30,6 +30,8 @@ const Concerns = () => {
         }
         getConcerns()
     }, [])
+
+
     return (
         <>
             <Page size="small">
@@ -42,14 +44,10 @@ const Concerns = () => {
                         ¿Cuáles son tus inquietudes?
                     </Text>
                     <Grid.Container gap={2}>
-                        {/*  justify="center" */}
-                        {/*  */}
                         {concerns.length > 0
                             ? concerns.map((item, index) => (
-                                <Grid key={index} xs={12}>
-                                    <Card shadow className="card">
-                                        <Text p>{item.fields.title}</Text>
-                                    </Card>
+                                <Grid key={index} xs={12} sm={8} md={6}>
+                                    <Card item={item} />
                                 </Grid>
                             ))
                             : null}
