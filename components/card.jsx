@@ -1,4 +1,4 @@
-import classNames from 'classNames';
+// import classNames from 'classNames';
 import styles from '../styles/components/card.module.scss';
 import { useState } from 'react';
 import { Card, Text } from '@geist-ui/react';
@@ -12,7 +12,8 @@ const ItemCard = ({ item }) => {
         setActive(!isActive);
     };
     return (
-        <Card className={classNames([styles.card, isActive && styles.selected])} onClick={handleClassChange} >
+        // className={classNames([styles.card, isActive && styles.selected])}
+        <Card onClick={handleClassChange} >
             <Card.Content className={styles.content}>
                 <Text p className={styles.text}>{item.fields.title}</Text>
             </Card.Content>
