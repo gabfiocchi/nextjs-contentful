@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Button, Grid, Page, Spacer, Text } from '@geist-ui/react';
 import { createClient } from 'contentful';
 import Card from '../../components/card';
-
+import Logo from '../../components/logo';
 const client = createClient({
     space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID,
     accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN,
@@ -36,7 +36,7 @@ const Concerns = () => {
         <>
             <Page size="small">
                 <Page.Header>
-                    <h2>Singular Cover</h2>
+                    <Logo />
                 </Page.Header>
                 <Page.Content>
 

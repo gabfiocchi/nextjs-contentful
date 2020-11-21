@@ -2,14 +2,14 @@ import styles from '../../styles/pages/location.module.scss';
 import { useState } from 'react';
 import Link from 'next/link';
 import { Button, Input, Page, Spacer, Text } from '@geist-ui/react';
-
+import Logo from '../../components/logo';
 
 const Name = () => {
     return (
         <>
             <Page size="small">
                 <Page.Header>
-                    <h2>Singular Cover</h2>
+                    <Logo />
                 </Page.Header>
                 <Page.Content>
 

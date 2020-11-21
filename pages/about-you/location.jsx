@@ -3,6 +3,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { AutoComplete, Button, Grid, Page, Spacer, Text } from '@geist-ui/react';
 import { getAddresses } from '../../lib/mapbox';
+import Logo from '../../components/logo';
+
 const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 
 
@@ -74,7 +76,7 @@ const Location = () => {
         <>
             <Page size="small">
                 <Page.Header>
-                    <h2>Singular Cover</h2>
+                    <Logo />
                 </Page.Header>
                 <Page.Content>
 

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link';
 import { Button, Grid, Page, Text } from '@geist-ui/react';
 import { createClient } from 'contentful';
+import Logo from '../components/logo';
 
 
 const client = createClient({
@@ -35,7 +36,7 @@ const HomePage = () => {
     <>
       <Page size="small">
         <Page.Header>
-          <h2>Singular Cover</h2>
+          <Logo />
         </Page.Header>
         <Page.Content>
 
