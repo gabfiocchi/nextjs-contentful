@@ -34,6 +34,7 @@ const Location = () => {
         <AutoComplete.Option value={id}>
             <Grid.Container style={{ padding: '10pt 0' }}>
                 <Grid xs={24}>
+                    {/*  TODO: Add word wrap. */}
                     <p span>{label}</p>
                 </Grid>
                 {/* <Grid.Container xs={24}>
