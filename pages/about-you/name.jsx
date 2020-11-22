@@ -1,10 +1,18 @@
-import styles from '../../styles/pages/location.module.scss';
-import { useState } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { updateFormField } from '../../store/survey/action';
 import Link from 'next/link';
 import { Button, Input, Page, Spacer, Text } from '@geist-ui/react';
 import Logo from '../../components/logo';
 
-const Name = () => {
+const Name = (props) => {
+    const blurInput = (event) => {
+        props.updateFormField({
+            name: event.target.name,
+            value: event.target.value
+        });
+    };
+
     return (
         <>
             <Page size="small">
@@ -16,7 +24,7 @@ const Name = () => {
                     <Text h3>
                         ¿Cómo te llamas?
                     </Text>
-                    <Input placeholder="Nombre y apellido" width="100%" />
+                    <Input name="name" placeholder="Nombre y apellido" width="100%" onBlur={blurInput} autoComplete="name" />
                     <Spacer y={1} />
                     <Spacer y={1} />
                     <Link href="/about-you/contact">
@@ -33,4 +41,9 @@ const Name = () => {
     )
 }
 
-export default Name
+
+const mapDispatchToProps = dispatch => ({
+    updateFormField: bindActionCreators(updateFormField, dispatch)
+})
+
+export default connect(null, mapDispatchToProps)(Name)
