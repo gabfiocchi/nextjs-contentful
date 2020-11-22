@@ -27,28 +27,25 @@ const HomePage = () => {
         </Page.Header>
         <Page.Content>
 
-          <Text h2>
+          <Text h2 size={36}>
             {content.title}
           </Text>
 
-          <Text p>
+          <Text p size={14}>
             {content.subtitle}
           </Text>
 
-          <Text p b>
+          <Text p b size={18}>
             {content.text}
           </Text>
           <Grid>
             <Link href="/about-you/concerns">
-              <Button className={styles.action} auto type="success">
+              <Button className={styles.action} type="success">
                 {content.action}
               </Button>
             </Link>
           </Grid>
         </Page.Content>
-        <Page.Footer>
-          <h2>Footer</h2>
-        </Page.Footer>
       </Page>
     </>
   )

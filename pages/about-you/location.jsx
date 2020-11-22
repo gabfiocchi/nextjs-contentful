@@ -100,9 +100,6 @@ const Location = () => {
                         </Button>
                     </Link>
                 </Page.Content>
-                <Page.Footer>
-                    <h2>Footer</h2>
-                </Page.Footer>
             </Page>
         </>
     )

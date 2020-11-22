@@ -1,21 +1,18 @@
 
-import { Modal } from '@geist-ui/react';
+import { Input, Modal } from '@geist-ui/react';
 
 
-const Logo = ({ open, closeHandler }) => {
+const DiscountModal = ({ open, closeHandler }) => {
     return (
-        <div>
-            <Modal open={open}>
-                <Modal.Title>Modal</Modal.Title>
-                <Modal.Subtitle>This is a modal</Modal.Subtitle>
-                <Modal.Content>
-                    <p>Some content contained within the modal.</p>
-                </Modal.Content>
-                <Modal.Action passive onClick={closeHandler}>Cancel</Modal.Action>
-                <Modal.Action>Submit</Modal.Action>
-            </Modal>
-        </div>
+        <Modal open={open}>
+            <Modal.Subtitle>Ingresa tu código</Modal.Subtitle>
+            <Modal.Content>
+                <Input name="name" placeholder="Código" width="100%" />
+            </Modal.Content>
+            <Modal.Action passive onClick={closeHandler}>Cancelar</Modal.Action>
+            <Modal.Action passive onClick={closeHandler}>Aceptar</Modal.Action>
+        </Modal>
     )
 };
 
-export default Logo;
+export default DiscountModal;

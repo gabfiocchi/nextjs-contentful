@@ -1,9 +1,26 @@
+
+import { useSelector, shallowEqual } from 'react-redux';
 import { Button, Grid, Page, Spacer, Text } from '@geist-ui/react';
 import Card from '../components/card';
 import Logo from '../components/logo';
 
+const filterOptions = (options) => {
+    console.log('options', options);
+    return options.filter(item => item.selected)
+}
+
+const loadStore = () => {
+    return useSelector(
+        (state) => ({
+            concerns: filterOptions(state.concerns),
+            name: state.name
+        }),
+        shallowEqual
+    )
+}
 const Price = () => {
-    const concerns = [];
+    const { concerns, name } = loadStore()
+
     return (
         <>
             <Page size="small">
@@ -13,14 +30,13 @@ const Price = () => {
                 <Page.Content>
 
                     <Text h2>
-                        👋 [name]!
+                        👋 {name}!
                     </Text>
-                    {/* Opciones seleccionadas */}
-                    <Grid.Container gap={2}>
+                    <Grid.Container gap={1}>
                         {concerns.length > 0
                             ? concerns.map((item, index) => (
-                                <Grid key={index} xs={12} sm={8} md={6}>
-                                    <Card item={item} />
+                                <Grid key={index} xs={8} sm={6} md={4}>
+                                    <Card item={item} disabled="true" />
                                 </Grid>
                             ))
                             : null}
@@ -30,9 +46,6 @@ const Price = () => {
                     </Text>
                     {/* Sugerencias */}
                 </Page.Content>
-                <Page.Footer>
-                    <h2>Footer</h2>
-                </Page.Footer>
             </Page>
         </>
     )

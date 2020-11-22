@@ -1,4 +1,4 @@
-import { useSelector, shallowEqual } from 'react-redux'
+import { useSelector, shallowEqual } from 'react-redux';
 import { fetchConcerns } from '../../store/survey/action';
 import { initializeStore } from '../../store/store';
 import styles from '../../styles/Concerns.module.scss';
@@ -19,7 +19,10 @@ const loadStore = () => {
 const Concerns = () => {
     const { concerns } = loadStore()
 
-    console.log('concerns', concerns)
+    const disabledHandler = () => {
+        return !concerns.find(concern => concern.selected);
+    }
+
     return (
         <>
             <Page size="small">
@@ -43,22 +46,11 @@ const Concerns = () => {
                     <Spacer y={1} />
 
                     <Link href="/about-you/location">
-                        <Button className="action" auto type="success">
+                        <Button className="action" type="success" disabled={disabledHandler()}>
                             Siguiente paso
                         </Button>
                     </Link>
-
-                    {/* <Grid>
-                        <Link href="/about-you/location">
-                            <Button className="action" auto type="success">
-                                Go to Location
-                            </Button>
-                        </Link>
-                    </Grid> */}
                 </Page.Content>
-                <Page.Footer>
-                    <h2>Footer</h2>
-                </Page.Footer>
             </Page>
         </>
     )
