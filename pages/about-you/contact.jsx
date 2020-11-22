@@ -1,23 +1,37 @@
 import { useState } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { updateFormField } from '../../store/survey/action';
+import { useDispatch, useSelector } from 'react-redux'
+import { SurveyActionTypes } from '../../store/survey/action';
 import Link from 'next/link';
 import { Button, Checkbox, Input, Page, Spacer, Text } from '@geist-ui/react';
 import Logo from '../../components/logo';
 import DiscountModal from '../../components/discount-modal';
 import styles from '../../styles/pages/location.module.scss';
 
-const Contact = (props) => {
+const Store = () => {
+    const name = useSelector((state) => state.name);
+
+    const dispatch = useDispatch();
+
+    const updateFormField = (payload) =>
+        dispatch({
+            type: SurveyActionTypes.SET_FIELD,
+            payload
+        });
+
+    return { name, updateFormField };
+};
+
+const Contact = () => {
+    const { name, updateFormField } = Store()
     const [isOpen, setIsOpen] = useState(false);
 
     const discountHandler = () => setIsOpen(true)
     const closeDiscountHandler = () => setIsOpen(false)
     const blurInput = (event) => {
-        props.updateFormField({
+        updateFormField({
             name: event.target.name,
             value: event.target.value
-        });
+        })
     };
 
     return (
@@ -28,7 +42,7 @@ const Contact = (props) => {
                 </Page.Header>
                 <Page.Content>
                     <Text h3>
-                        Hola [name]
+                        Hola {name}
                     </Text>
 
                     <Text p>
@@ -80,8 +94,4 @@ const Contact = (props) => {
     )
 }
 
-const mapDispatchToProps = dispatch => ({
-    updateFormField: bindActionCreators(updateFormField, dispatch)
-})
-
-export default connect(null, mapDispatchToProps)(Contact)
+export default Contact;

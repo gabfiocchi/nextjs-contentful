@@ -1,17 +1,31 @@
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { updateFormField } from '../../store/survey/action';
+
+import { useDispatch } from 'react-redux'
+import { SurveyActionTypes } from '../../store/survey/action';
 import Link from 'next/link';
 import { Button, Input, Page, Spacer, Text } from '@geist-ui/react';
 import Logo from '../../components/logo';
 
-const Name = (props) => {
+
+const Store = () => {
+    const dispatch = useDispatch();
+
+    return (payload) =>
+        dispatch({
+            type: SurveyActionTypes.SET_FIELD,
+            payload
+        });
+};
+
+const Name = () => {
+    const updateFormField = Store()
+
     const blurInput = (event) => {
-        props.updateFormField({
+        updateFormField({
             name: event.target.name,
             value: event.target.value
-        });
+        })
     };
+
 
     return (
         <>
@@ -41,9 +55,4 @@ const Name = (props) => {
     )
 }
 
-
-const mapDispatchToProps = dispatch => ({
-    updateFormField: bindActionCreators(updateFormField, dispatch)
-})
-
-export default connect(null, mapDispatchToProps)(Name)
+export default Name;
