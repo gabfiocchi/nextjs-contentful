@@ -1,5 +1,4 @@
 import { createClient } from 'contentful';
-
 const client = createClient({
     space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID,
     accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN,
@@ -8,14 +7,8 @@ const client = createClient({
 export const SurveyActionTypes = {
     SET_FIELD: 'SET_FIELD',
     SET_LANDING: 'SET_LANDING',
-    SET_ITEMS: 'SET_ITEMS'
-}
-
-export const fetchItems = () => async (dispatch) => {
-    // const res = await fetch('https://badiairlines.herokuapp.com/aircrafts');
-    // const payload = await res.json();
-
-    // return dispatch({ type: SurveyActionTypes.SET_ITEMS, payload })
+    SET_CONCERNS: 'SET_CONCERNS',
+    UPDATE_CONCERNS: 'UPDATE_CONCERNS'
 }
 
 export const fetchLanding = () => async (dispatch) => {
@@ -24,10 +17,28 @@ export const fetchLanding = () => async (dispatch) => {
     });
 
     if (Array.isArray(entries.items)) {
-        console.log('hola')
         return dispatch({ type: SurveyActionTypes.SET_LANDING, payload: entries.items[0].fields })
     }
 };
 
-export const updateFormField = value => ({ type: SurveyActionTypes.SET_FIELD, payload: value });
+export const fetchConcerns = () => async (dispatch) => {
+    const entries = await client.getEntries({
+        content_type: 'concerns',
+        order: 'sys.createdAt'
+    });
+
+    if (entries.items) {
+        const items = entries.items.map((item, index) => ({
+            index,
+            title: item.fields.title,
+            selected: false
+        }))
+
+        return dispatch({ type: SurveyActionTypes.SET_CONCERNS, payload: items })
+    }
+};
+
+export const updateConcern = value => (dispatch) => dispatch({ type: SurveyActionTypes.UPDATE_CONCERNS, payload: value });
+
+export const updateFormField = value => (dispatch) => dispatch({ type: SurveyActionTypes.SET_FIELD, payload: value });
 

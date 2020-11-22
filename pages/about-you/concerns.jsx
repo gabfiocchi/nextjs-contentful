@@ -1,37 +1,25 @@
+import { useSelector, shallowEqual } from 'react-redux'
+import { fetchConcerns } from '../../store/survey/action';
+import { initializeStore } from '../../store/store';
 import styles from '../../styles/Concerns.module.scss';
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button, Grid, Page, Spacer, Text } from '@geist-ui/react';
-import { createClient } from 'contentful';
 import Card from '../../components/card';
 import Logo from '../../components/logo';
-const client = createClient({
-    space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID,
-    accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN,
-});
+
+const loadStore = () => {
+    return useSelector(
+        (state) => ({
+            concerns: state.concerns,
+        }),
+        shallowEqual
+    )
+}
 
 const Concerns = () => {
-    async function fetchEntries() {
-        const entries = await client.getEntries({
-            content_type: 'concerns'
-        })
-        if (entries.items) {
-            console.log('entries', entries.items);
-            return entries.items;
-        }
-        console.log(`Error getting Entries for ${contentType.name}.`)
-    }
+    const { concerns } = loadStore()
 
-    const [concerns, setConcerns] = useState([])
-
-    useEffect(() => {
-        const getConcerns = async () => {
-            setConcerns(await fetchEntries())
-        }
-        getConcerns()
-    }, [])
-
-
+    console.log('concerns', concerns)
     return (
         <>
             <Page size="small">
@@ -45,8 +33,8 @@ const Concerns = () => {
                     </Text>
                     <Grid.Container gap={2}>
                         {concerns.length > 0
-                            ? concerns.map((item, index) => (
-                                <Grid key={index} xs={12} sm={8} md={6}>
+                            ? concerns.map((item) => (
+                                <Grid key={item.index} xs={12} sm={8} md={6}>
                                     <Card item={item} />
                                 </Grid>
                             ))
@@ -74,6 +62,15 @@ const Concerns = () => {
             </Page>
         </>
     )
+}
+
+export const getServerSideProps = async () => {
+    const reduxStore = initializeStore()
+    const { dispatch } = reduxStore
+
+    await dispatch(fetchConcerns())
+
+    return { props: { initialReduxState: reduxStore.getState() } }
 }
 
 export default Concerns

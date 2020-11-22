@@ -1,24 +1,19 @@
-// import classNames from 'classNames';
 import styles from '../styles/components/card.module.scss';
-import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Card, Text } from '@geist-ui/react';
-
+import { updateConcern } from '../store/survey/action';
 
 const ItemCard = ({ item }) => {
-    const [isActive, setActive] = useState(false);
+    const dispatch = useDispatch();
+    const handleClassChange = ({ index, selected }) => updateConcern({ index, selected })(dispatch);
 
-
-    const handleClassChange = () => {
-        setActive(!isActive);
-    };
     return (
-        // className={classNames([styles.card, isActive && styles.selected])}
-        <Card onClick={handleClassChange} >
+        <Card onClick={() => handleClassChange(item)} className={`${styles.card} ${item.selected && styles.selected}`}>
             <Card.Content className={styles.content}>
-                <Text p className={styles.text}>{item.fields.title}</Text>
+                <Text p className={styles.text}>{item.title}</Text>
             </Card.Content>
         </Card >
     )
-}
+};
 
-export default ItemCard
+export default ItemCard;

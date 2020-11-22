@@ -1,30 +1,33 @@
 import { SurveyActionTypes } from './action'
+import update from 'immutability-helper';
 
 const Reducer = (state, action) => {
     switch (action.type) {
-        case SurveyActionTypes.SET_ITEMS:
-            return {
-                ...state,
-                loading: false,
-                items: action.payload
-            };
+        case SurveyActionTypes.SET_CONCERNS:
+            return update(state, {
+                concerns: { $set: action.payload }
+            })
+        case SurveyActionTypes.UPDATE_CONCERNS:
+            const index = action.payload.index;
+            const concern = state.concerns[index]
+            const newConcern = update(concern, {
+                selected: { $set: !concern.selected }
+            })
+            return update(state, {
+                concerns: { $splice: [[index, 1, newConcern]] }
+            })
         case SurveyActionTypes.SET_LANDING:
-            console.log('reducer!', action.payload)
-            return {
-                ...state,
-                landing: action.payload
-            };
+            return update(state, {
+                landing: { $set: action.payload }
+            })
         case SurveyActionTypes.SET_FIELD:
-            console.log('action.payload, ', action.payload)
-            return {
-                ...state,
-                [action.payload.name]: action.payload.value
-            };
+            return update(state, {
+                [action.payload.name]: { $set: action.payload.value }
+            })
 
         default:
             return state
     }
-
 }
 
 export default Reducer;

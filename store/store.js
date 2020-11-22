@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
-import { createStore, applyMiddleware, combineReducers } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
-import { composeWithDevTools } from 'redux-devtools-extension';
 import reducer from './survey/reducer';
 let store
 
@@ -11,8 +10,7 @@ const initialState = {
   name: '',
   phone: '',
   email: '',
-  items: [],
-  loading: true
+  concerns: [],
 }
 
 const bindMiddleware = middleware => {
@@ -32,7 +30,6 @@ function initStore(preloadedState = initialState) {
 }
 
 export const initializeStore = (preloadedState) => {
-  console.log('initializeStore', preloadedState);
   let _store = store ?? initStore(preloadedState)
 
   // After navigating to a page with an initial Redux state, merge that state
@@ -51,7 +48,6 @@ export const initializeStore = (preloadedState) => {
   // Create the store once in the client
   if (!store) store = _store
 
-  console.log('initializeStore _store');
   return _store
 }
 

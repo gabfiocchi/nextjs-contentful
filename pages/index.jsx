@@ -1,12 +1,12 @@
 import { useSelector, shallowEqual } from 'react-redux'
 import { fetchLanding } from '../store/survey/action';
+import { initializeStore } from '../store/store';
 import styles from '../styles/Home.module.css'
 import Link from 'next/link';
 import { Button, Grid, Page, Text } from '@geist-ui/react';
 import Logo from '../components/logo';
-import { initializeStore } from '../store/store';
 
-const useContent = () => {
+const loadStore = () => {
   return useSelector(
     (state) => ({
       content: state.landing,
@@ -17,9 +17,7 @@ const useContent = () => {
 
 
 const HomePage = () => {
-  const { content } = useContent()
-
-  console.log('content', content)
+  const { content } = loadStore()
 
   return (
     <>
@@ -55,7 +53,7 @@ const HomePage = () => {
     </>
   )
 }
-export async function getServerSideProps() {
+export const getServerSideProps = async () => {
   const reduxStore = initializeStore()
   const { dispatch } = reduxStore
 
