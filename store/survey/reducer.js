@@ -8,6 +8,12 @@ const Reducer = (state, action) => {
                 loading: false,
                 items: action.payload
             };
+        case SurveyActionTypes.SET_LANDING:
+            console.log('reducer!', action.payload)
+            return {
+                ...state,
+                landing: action.payload
+            };
         case SurveyActionTypes.SET_FIELD:
             console.log('action.payload, ', action.payload)
             return {

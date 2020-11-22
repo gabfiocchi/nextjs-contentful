@@ -1,37 +1,26 @@
+import { useSelector, shallowEqual } from 'react-redux'
+import { fetchLanding } from '../store/survey/action';
 import styles from '../styles/Home.module.css'
-import { useEffect, useState } from 'react'
 import Link from 'next/link';
 import { Button, Grid, Page, Text } from '@geist-ui/react';
-import { createClient } from 'contentful';
 import Logo from '../components/logo';
+import { initializeStore } from '../store/store';
 
+const useContent = () => {
+  return useSelector(
+    (state) => ({
+      content: state.landing,
+    }),
+    shallowEqual
+  )
+}
 
-const client = createClient({
-  space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID,
-  accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN,
-});
 
 const HomePage = () => {
-  async function fetchEntries() {
-    const entries = await client.getEntries({
-      content_type: 'landing',
-      limit: 1
-    })
-    if (entries.items) {
-      console.log('entries', entries.items[0].fields);
-      return entries.items[0] && entries.items[0].fields;
-    }
-    console.log(`Error getting Entries for ${contentType.name}.`)
-  }
+  const { content } = useContent()
 
-  const [content, setContent] = useState([])
+  console.log('content', content)
 
-  useEffect(() => {
-    const getContent = async () => {
-      setContent(await fetchEntries())
-    }
-    getContent()
-  }, [])
   return (
     <>
       <Page size="small">
@@ -66,5 +55,13 @@ const HomePage = () => {
     </>
   )
 }
+export async function getServerSideProps() {
+  const reduxStore = initializeStore()
+  const { dispatch } = reduxStore
 
-export default HomePage
+  await dispatch(fetchLanding())
+
+  return { props: { initialReduxState: reduxStore.getState() } }
+}
+
+export default HomePage;

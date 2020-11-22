@@ -1,11 +1,13 @@
-import { useMemo } from 'react'
-import { createStore, applyMiddleware } from 'redux'
-import { composeWithDevTools } from 'redux-devtools-extension'
+import { useMemo } from 'react';
+import { createStore, applyMiddleware, combineReducers } from 'redux'
+import thunkMiddleware from 'redux-thunk'
+import { composeWithDevTools } from 'redux-devtools-extension';
 import reducer from './survey/reducer';
 let store
 
 const initialState = {
   location: {},
+  landing: {},
   name: '',
   phone: '',
   email: '',
@@ -13,15 +15,24 @@ const initialState = {
   loading: true
 }
 
+const bindMiddleware = middleware => {
+  if (process.env.NODE_ENV !== 'production') {
+    const { composeWithDevTools } = require('redux-devtools-extension')
+    return composeWithDevTools(applyMiddleware(...middleware))
+  }
+  return applyMiddleware(...middleware)
+}
+
 function initStore(preloadedState = initialState) {
   return createStore(
     reducer,
     preloadedState,
-    composeWithDevTools(applyMiddleware())
+    bindMiddleware([thunkMiddleware])
   )
 }
 
 export const initializeStore = (preloadedState) => {
+  console.log('initializeStore', preloadedState);
   let _store = store ?? initStore(preloadedState)
 
   // After navigating to a page with an initial Redux state, merge that state
@@ -40,6 +51,7 @@ export const initializeStore = (preloadedState) => {
   // Create the store once in the client
   if (!store) store = _store
 
+  console.log('initializeStore _store');
   return _store
 }
 
