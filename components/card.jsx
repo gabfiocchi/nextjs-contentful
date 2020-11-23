@@ -5,7 +5,7 @@ import { updateConcern } from '../store/survey/action';
 
 const ItemCard = ({ item, disabled }) => {
     const dispatch = useDispatch();
-    const handleClassChange = ({ index, selected }) => updateConcern({ index, selected })(dispatch);
+    const handleClassChange = ({ index, selected }) => !disabled && updateConcern({ index, selected })(dispatch);
 
     return (
         <Card onClick={() => handleClassChange(item)} className={`${styles.card} ${item.selected && !disabled && styles.selected} ${disabled && styles.disabled}`}>
