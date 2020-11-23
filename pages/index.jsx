@@ -1,7 +1,6 @@
-import { useSelector, shallowEqual } from 'react-redux'
+import { useSelector, shallowEqual } from 'react-redux';
 import { fetchLanding } from '../store/survey/action';
 import { initializeStore } from '../store/store';
-import styles from '../styles/Home.module.css'
 import Link from 'next/link';
 import { Button, Grid, Page, Text } from '@geist-ui/react';
 import Logo from '../components/logo';
@@ -40,7 +39,7 @@ const HomePage = () => {
           </Text>
           <Grid>
             <Link href="/about-you/concerns">
-              <Button className={styles.action} type="success">
+              <Button type="success">
                 {content.action}
               </Button>
             </Link>

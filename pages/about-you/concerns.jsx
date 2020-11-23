@@ -1,7 +1,6 @@
 import { useSelector, shallowEqual } from 'react-redux';
 import { fetchConcerns } from '../../store/survey/action';
 import { initializeStore } from '../../store/store';
-import styles from '../../styles/Concerns.module.scss';
 import Link from 'next/link';
 import { Button, Grid, Page, Spacer, Text } from '@geist-ui/react';
 import Card from '../../components/card';
@@ -37,7 +36,7 @@ const Concerns = () => {
                     <Grid.Container gap={2}>
                         {concerns.length > 0
                             ? concerns.map((item) => (
-                                <Grid key={item.index} xs={12} sm={8} md={6}>
+                                <Grid key={item.index} xs={12}>
                                     <Card item={item} />
                                 </Grid>
                             ))

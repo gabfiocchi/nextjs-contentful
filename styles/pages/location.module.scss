@@ -5,3 +5,8 @@
 .underline {
     text-decoration: underline;
 }
+.option {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
