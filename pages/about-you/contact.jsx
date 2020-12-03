@@ -39,11 +39,6 @@ const Contact = () => {
 
     const isDisabled = () => !acceptTerms || !acceptTime || !phone || !email;
 
-    const blurInput = (event) => updateFormField({
-        name: event.target.name,
-        value: event.target.value
-    })(dispatch);
-
     return (
         <>
             <Page size="small">
